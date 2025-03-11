@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Cipher</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <img src="icon.png" alt="Email Cipher Logo" class="logo">
+    </div>
+
+    <!-- Screen 1: Main Menu -->
+    <div id="main-screen" class="screen">
+        <h2>Email Cipher</h2>
+        <button id="encrypt">Encrypt</button>
+        <button id="decrypt">Decrypt</button>
+    </div>
+
+    <!-- Screen 2: Technique Selection -->
+    <div id="technique-screen" class="screen" style="display:none;">
+        <h2>Select the Technique</h2>
+        <button class="technique" data-technique="caesar">Caesar Cipher</button>
+        <button class="technique" data-technique="rail-fence">Rail Fence</button>
+        <button class="technique" data-technique="transposition">Transposition</button>
+        <button id="back-to-main">Cancel</button>
+    </div>
+
+    <!-- Screen 3: Key Input -->
+    <div id="key-screen" class="screen" style="display:none;">
+        <h2>Enter Key</h2>
+        <input type="text" id="key-input" placeholder="Enter key">
+        <button id="done">Done</button>
+        <button id="cancel-key">Cancel</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
