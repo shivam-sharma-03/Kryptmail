@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - Email Cipher</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="header">
+    <img src="icon.png" alt="Email Cipher Logo" class="logo" />
+  </div>
+
+  <h2>Sign Up</h2>
+
+  <form id="signup-form" autocomplete="off">
+    <input type="email" id="email" placeholder="Email Address" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <input type="password" id="confirm-password" placeholder="Confirm Password" required />
+    <textarea id="public-key" placeholder="Generated Public Key will appear here" readonly rows="5"></textarea>
+
+    <button type="button" id="generate-key-btn">🔐 Generate Key Pair</button>
+    <button type="submit">📝 Sign Up</button>
+  </form>
+
+  <p>Already registered? <a href="login.html">Click Login</a></p>
+
+  <script src="signup.js"></script>
+</body>
+</html>

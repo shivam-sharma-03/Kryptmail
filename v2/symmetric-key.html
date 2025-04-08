@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enter Symmetric Key</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">
+    <img src="icon.png" alt="Email Cipher Logo" class="logo" />
+  </div>
+
+  <h2>Enter Key for <span id="tech-name">Encryption</span></h2>
+
+  <input type="text" id="sym-key" placeholder="Enter your key" required />
+  <div style="margin-top: 20px;">
+    <button id="done-btn">Done</button>
+    <button id="back-btn">⬅ Back</button>
+  </div>
+
+  <!-- ✅ External JS module -->
+  <script type="module" src="symmetric-key.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    width: 250px;
+    background: linear-gradient(135deg, #007bff, #87cefa);
+    /* background-image: url('D:\chrome-email-cipher-extension\cipher_extension\icon.png');  */
+    color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 10px;
+}
+
+.header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+    object-fit: contain;
+}
+
+h2 {
+    margin-top: 70px;
+    font-size: 1.5rem;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    background-color: rgba(0, 123, 255, 0.9);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgba(0, 86, 179, 0.9);
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    margin: 10px auto;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+.screen {
+    display: block;
+}
