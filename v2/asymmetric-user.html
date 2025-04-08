@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Find User - Email Cipher</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">
+    <img src="icon.png" alt="Email Cipher Logo" class="logo" />
+  </div>
+
+  <h2>Find Recipient</h2>
+
+  <input type="email" id="recipient-email" placeholder="Recipient's Email" required />
+  <button id="find-user-btn">Find User</button>
+
+  <div id="key-status" style="margin-top: 10px;"></div>
+
+  <button id="done-btn" disabled>Done</button>
+  <button id="back-btn" style="margin-top: 10px;">⬅ Back</button>
+
+  <!-- ✅ External JS file -->
+  <script src="asymmetric-user.js"></script>
+</body>
+</html>
