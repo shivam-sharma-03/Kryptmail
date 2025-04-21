@@ -1,4 +1,4 @@
-export async function importPublicKey(pemKey) {
+async function importPublicKey(pemKey) {
   const keyData = pemKey
     .replace("-----BEGIN PUBLIC KEY-----", "")
     .replace("-----END PUBLIC KEY-----", "")
@@ -17,7 +17,7 @@ export async function importPublicKey(pemKey) {
   );
 }
 
-export async function importPrivateKey(pemKey) {
+async function importPrivateKey(pemKey) {
   const keyData = pemKey
     .replace("-----BEGIN PRIVATE KEY-----", "")
     .replace("-----END PRIVATE KEY-----", "")
@@ -36,22 +36,21 @@ export async function importPrivateKey(pemKey) {
   );
 }
 
-export async function rsaEncrypt(text, publicKeyPem) {
+async function rsaEncrypt(text, publicKeyPem) {
   const publicKey = await importPublicKey(publicKeyPem);
   const encoded = new TextEncoder().encode(text);
   const encrypted = await crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, encoded);
   return btoa(String.fromCharCode(...new Uint8Array(encrypted)));
 }
 
-export async function rsaDecrypt(base64Cipher, privateKeyPem) {
+async function rsaDecrypt(base64Cipher, privateKeyPem) {
   const privateKey = await importPrivateKey(privateKeyPem);
   const binary = Uint8Array.from(atob(base64Cipher), c => c.charCodeAt(0));
   const decrypted = await crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, binary);
   return new TextDecoder().decode(decrypted);
 }
 
-// New function to validate PEM format
-export function isValidPemKey(key, type = 'PRIVATE') {
+function isValidPemKey(key, type = 'PRIVATE') {
   const header = `-----BEGIN ${type} KEY-----`;
   const footer = `-----END ${type} KEY-----`;
   return key.includes(header) && key.includes(footer);

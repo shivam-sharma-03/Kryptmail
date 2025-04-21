@@ -12,7 +12,7 @@ function validateVigenereKey(key) {
   }
 }
 
-export function encryptVigenere(plain, key) {
+function encryptVigenere(plain, key) {
   validateVigenereKey(key);
 
   key = key.toLowerCase();
@@ -36,7 +36,7 @@ export function encryptVigenere(plain, key) {
   return result;
 }
 
-export function decryptVigenere(cipher, key) {
+function decryptVigenere(cipher, key) {
   validateVigenereKey(key);
 
   key = key.toLowerCase();
