@@ -2,11 +2,12 @@
   "manifest_version": 3,
   "name": "Email Cipher",
   "version": "1.0",
-  "description": "Encrypt and Decrypt emails using Caesar Cipher and other techniques",
+  "description": "Encrypt and Decrypt emails using cryptographic techniques",
   "permissions": ["activeTab", "scripting", "storage"],
   "host_permissions": [
     "https://mail.google.com/*",
-    "https://outlook.live.com/*"
+    "https://outlook.live.com/*",
+    "http://localhost/*"
   ],
   "action": {
     "default_popup": "main.html",
@@ -14,8 +15,17 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://mail.google.com/*"],
-      "js": ["content-script.js"],
+      "matches": [
+        "https://mail.google.com/*",
+        "https://outlook.live.com/*"
+      ],
+      "js": [
+        "cipher/caesar.js",
+        "cipher/railfence.js",
+        "cipher/vigenere.js",
+        "cipher/rsa.js",
+        "content-script.js"
+      ],
       "run_at": "document_idle"
     }
   ]

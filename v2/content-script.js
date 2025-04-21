@@ -1,6 +1,7 @@
-import { encryptCaesar } from './cipher/caesar.js';
-import { encryptRailFence } from './cipher/railfence.js';
-import { encryptVigenere } from './cipher/vigenere.js';
+import { encryptCaesar, decryptCaesar } from './cipher/caesar.js';
+import { encryptRailFence, decryptRailFence } from './cipher/railfence.js';
+import { encryptVigenere, decryptVigenere } from './cipher/vigenere.js';
+import { rsaEncrypt, rsaDecrypt, isValidPemKey } from './cipher/rsa.js';
 
 // Get selected text or email body
 function getSelectedTextOrEmailBody() {
@@ -11,16 +12,16 @@ function getSelectedTextOrEmailBody() {
   return contentEditable ? contentEditable.innerText : '';
 }
 
-// Replace selection or entire editable area with encrypted text
-function replaceWithEncryptedText(encryptedText) {
+// Replace selection or entire editable area with processed text
+function replaceWithProcessedText(processedText) {
   const selection = window.getSelection();
   if (selection.toString().trim()) {
     const range = selection.getRangeAt(0);
     range.deleteContents();
-    range.insertNode(document.createTextNode(encryptedText));
+    range.insertNode(document.createTextNode(processedText));
   } else {
     const editable = document.querySelector('[contenteditable="true"]');
-    if (editable) editable.innerText = encryptedText;
+    if (editable) editable.innerText = processedText;
   }
 }
 
@@ -32,6 +33,8 @@ function isValidKey(technique, key) {
       return !isNaN(parseInt(key)) && parseInt(key) > 0;
     case 'vigenere':
       return /^[a-zA-Z]+$/.test(key);
+    case 'rsa':
+      return isValidPemKey(key, 'PUBLIC') || isValidPemKey(key, 'PRIVATE');
     default:
       return false;
   }
@@ -41,44 +44,63 @@ function isValidKey(technique, key) {
 (async function () {
   const technique = localStorage.getItem('symmetricTechnique');
   const key = localStorage.getItem('symmetricKey');
-
-  if (!technique || !key) {
-    alert("❌ Missing encryption technique or key.");
-    return;
-  }
-
-  if (!isValidKey(technique, key)) {
-    alert(`❌ Invalid key format for ${technique} cipher.`);
-    return;
-  }
+  const rsaPublicKey = localStorage.getItem('rsaPublicKey');
+  const rsaPrivateKey = localStorage.getItem('rsaPrivateKey');
+  const mode = localStorage.getItem('mode'); // "encrypt" or "decrypt"
 
   const text = getSelectedTextOrEmailBody();
-  if (!text) {
-    alert("❌ No text selected or editable body found.");
+  if (!technique || !text) {
+    alert(`❌ Missing ${mode} technique or no text found.`);
     return;
   }
 
-  let encrypted = "";
+  let processedText = "";
 
   try {
     switch (technique.toLowerCase()) {
       case 'caesar':
-        encrypted = encryptCaesar(text, parseInt(key));
+        if (!isValidKey(technique, key)) throw new Error("Invalid Caesar key");
+        processedText = mode === 'encrypt'
+          ? encryptCaesar(text, parseInt(key))
+          : decryptCaesar(text, parseInt(key));
         break;
+
       case 'railfence':
-        encrypted = encryptRailFence(text, parseInt(key));
+        if (!isValidKey(technique, key)) throw new Error("Invalid Rail Fence key");
+        processedText = mode === 'encrypt'
+          ? encryptRailFence(text, parseInt(key))
+          : decryptRailFence(text, parseInt(key));
         break;
+
       case 'vigenere':
-        encrypted = encryptVigenere(text, key);
+        if (!isValidKey(technique, key)) throw new Error("Invalid Vigenère key");
+        processedText = mode === 'encrypt'
+          ? encryptVigenere(text, key)
+          : decryptVigenere(text, key);
         break;
+
+      case 'rsa':
+        if (mode === 'encrypt') {
+          if (!rsaPublicKey || !isValidPemKey(rsaPublicKey, 'PUBLIC')) {
+            throw new Error("Missing or invalid RSA public key.");
+          }
+          processedText = await rsaEncrypt(text, rsaPublicKey);
+        } else if (mode === 'decrypt') {
+          if (!rsaPrivateKey || !isValidPemKey(rsaPrivateKey, 'PRIVATE')) {
+            throw new Error("Missing or invalid RSA private key.");
+          }
+          processedText = await rsaDecrypt(text, rsaPrivateKey);
+        }
+        break;
+
       default:
-        throw new Error("Unsupported encryption technique.");
+        throw new Error("Unsupported technique.");
     }
 
-    replaceWithEncryptedText(encrypted);
-    alert("✅ Encryption complete!");
+    replaceWithProcessedText(processedText);
+    alert(`✅ ${mode === 'decrypt' ? 'Decryption' : 'Encryption'} complete!`);
   } catch (err) {
-    console.error("Encryption error:", err);
-    alert("⚠️ Encryption failed.");
+    console.error(`${mode === 'decrypt' ? 'Decryption' : 'Encryption'} error:`, err);
+    alert(`⚠️ ${mode === 'decrypt' ? 'Decryption' : 'Encryption'} failed: ${err.message}`);
   }
 })();
