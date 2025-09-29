@@ -47,6 +47,8 @@ Kryptmail's architecture is designed for security and separation of concerns. Th
 * **IMAP Server:** Standard protocol used to retrieve encrypted email payloads from mail storage.
 * **Mail Storage:** The database where the encrypted email content is stored.
 
+![System Architecture Diagram](./my_diagram.png)
+
 ---
 
 ## ⚙ Core Workflow/Protocol
