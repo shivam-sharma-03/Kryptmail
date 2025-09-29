@@ -154,6 +154,8 @@ npm run build
     3.  Click **"Load Temporary Add-on..."**.
     4.  Select the `manifest.json` file inside the `extension/build` (or `dist`) directory.
 
+---
+
 ## 🗺 Roadmap
 
 | Phase | Status      | Key Objectives                                                               |
@@ -161,6 +163,8 @@ npm run build
 | **1** | ✅ Complete | **MVP Launch:** Core E2EE messaging, user registration, key management, and a functional browser extension for Gmail. |
 | **2** | 🚧 In Progress | **UX & Security Hardening:** Refine UI/UX, strengthen ZKP implementation, add Outlook support, and conduct initial security audits. |
 | **3** | 📝 Planned  | **Feature Expansion:** Implement encrypted attachments, begin metadata protection, and develop a standalone desktop client prototype. |
+
+---
 
 ## 🚀 Future Plans & Known Limitations
 
